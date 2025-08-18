@@ -102,9 +102,11 @@ end
     end
   end
 
-  def self.next_migration_number(dirname)
-    Time.now.utc.strftime("%Y%m%d%H%M%S")
-  end
+def self.next_migration_number(dirname)
+  @prev_migration_nr ||= Time.now.utc.strftime("%Y%m%d%H%M%S").to_i
+  @prev_migration_nr += 1
+  @prev_migration_nr.to_s
+end
 
   def copy_migration
     migration_template "migrations/create_user.rb", "db/migrate/create_users.rb"

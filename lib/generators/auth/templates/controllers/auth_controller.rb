@@ -36,7 +36,7 @@ class AuthController < ApplicationController
   end
 
   # Issue new access + refresh token
-  new_access_token  = encode_token({ user_id: rt.user_id }, 15.minutes.from_now)
+  new_access_token  = encode_token({ user_id: rt.user_id })
   new_refresh_token = rt.user.generate_refresh_token
 
   # revoke the old token

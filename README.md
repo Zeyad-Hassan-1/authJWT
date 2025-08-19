@@ -27,7 +27,7 @@
 ## 📦 Installation
 
 Add this line to your application's Gemfile:  
-`gem 'rails_auth_generator', '~> 0.1.0'`  
+`gem 'rails_auth_generator', '~> 0.2.1'`  
 
 and then run:  
 `bundle install`  

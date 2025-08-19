@@ -1,101 +1,149 @@
 # RailsAuthGenerator
 
-RailsAuthGenerator provides Rails generators for authentication, user management, password resets, and mailers, streamlining the setup of secure user authentication in Rails applications. It helps you quickly scaffold all necessary models, controllers, mailers, and migrations for a robust authentication system.
+**RailsAuthGenerator** is a Rails generator that scaffolds a **JWT-based authentication system** with user management, password resets, refresh token rotation, and secure cookie handling. It saves you weeks of setup by providing all the models, controllers, serializers, and mailers you need for a robust, production-ready authentication flow.
 
-## Features
+---
 
-- User model and migration generator
-- Authentication controller and password reset controller
-- User serializer for API responses
-- Mailers for sending token to reset password
-- Easy integration with Rails 6.0+
+## ✨ Features
 
-## Installation
+- 🔑 **JWT Authentication**
+  - Access tokens (short-lived, default 15 min)
+  - Refresh tokens (stored securely in HttpOnly cookies)
+  - Token rotation + reuse detection
+  - Logout everywhere
+- 👤 **User management**
+  - User model with secure password
+  - Role support (admin, user)
+- ✉️ **Password reset**
+  - Password reset tokens sent via email
+- 🛠️ **Rails Generators**
+  - User model + migrations
+  - Auth controllers (`auth`, `users`, `password_resets`)
+  - Serializers and mailers
+- ⚡ Works with **Rails 6.0+**
 
-Add this line to your application's Gemfile:
+---
 
-```ruby
-gem 'rails_auth_generator', '~> 0.1.0'
-```
+## 📦 Installation
 
-and then
-```bash
-bundle install
-```
+Add this line to your application's Gemfile:  
+`gem 'rails_auth_generator', '~> 0.1.0'`  
 
-Or install it manually:
+and then run:  
+`bundle install`  
 
-```bash
-gem install rails_auth_generator
-```
+Or install it manually:  
+`gem install rails_auth_generator`  
 
-If you want to use the latest version from GitHub:
+If you want the latest version from GitHub:  
+`gem 'rails_auth_generator', git: 'https://github.com/Zeyad-Hassan-1/authJWT.git'`
 
-```ruby
-gem 'rails_auth_generator', git: 'https://github.com/Zeyad-Hassan-1/authJWT.git'
-```
+---
 
-## Usage
+## 🚀 Usage
 
-Run the generator to scaffold authentication features:
+Generate the full authentication system:  
+`rails generate auth`  
 
-```bash
-rails generate auth
-```
-then:
+Then run:  
+`bundle install`  
+`rails db:migrate`  
 
-```bash
-bundle install
-```
+This scaffolds:
+- User model & migrations
+- Controllers for authentication, users, and password resets
+- Mailers for password reset
+- Serializers for user data  
 
-This will create:
-- User model and migration
-- Authentication controllers (auth, password resets, users)
-- Mailers for sending token to reset password
-- Serializers for user data
+You can freely customize the generated files to match your app’s requirements.
 
-Don't forgot to run migration:
-```bash
-rails db:migrate
-```
+---
 
-You can customize the generated files as needed for your application.
-### Additional Setup
+## 🔧 Additional Setup
 
-1. **Enable CORS**
-   - Uncomment the CORS configuration in `config/initializers/cors.rb` to allow cross-origin requests if you are building an API.
+### 1. Enable CORS
+Uncomment the CORS config in `config/initializers/cors.rb` if building an API:
 
-2. **Set JWT Secret**
-   - Edit your Rails credentials to add a JWT secret:
+`Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins '*'
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head],
+      credentials: true
+  end
+end`
 
-     ```bash
-     VISUAL="code --wait" bin/rails credentials:edit
-     ```
+### 2. Set JWT Secret
+Edit your Rails credentials:  
+`VISUAL="code --wait" bin/rails credentials:edit`  
 
-   - Add the following to your credentials file:
+Add:
 
-     ```yaml
-     jwt:
-       secret: <your_generated_secret>
-     ```
+`jwt:
+  secret: <your_generated_secret>`
 
-   - Generate a secret key by running:
+Generate a secret key:  
+`rails secret`  
 
-     ```bash
-     rails secret
-     ```
+Replace `<your_generated_secret>` with the generated key.
 
-   - Replace `<your_generated_secret>` with the key you generated.
+---
 
+## 📚 API Overview
 
-## Contributing
+| Route             | Method | Description |
+|-------------------|--------|-------------|
+| `/signup`         | POST   | Create a new user |
+| `/login`          | POST   | Authenticate user, return JWT + set refresh cookie |
+| `/me`             | GET    | Get current logged-in user |
+| `/refresh`        | POST   | Rotate refresh token + issue new JWT |
+| `/logout`         | DELETE | Revoke refresh token + clear cookie |
+| `/password_resets`| POST   | Request a password reset |
+| `/password_resets` | PUT | Reset password with token |
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/Zeyad-Hassan-1/authJWT](https://github.com/Zeyad-Hassan-1/authJWT). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](CODE_OF_CONDUCT.md).
+---
 
-## License
+## 🧪 Example Usage
 
-The gem is available as open source under the terms of the [MIT License](LICENSE.txt).
+1. Sign up:  
+`curl -X POST http://localhost:3000/signup -H "Content-Type: application/json" -d '{"user": {"email":"test@example.com","password":"secret123"}}'`
 
-## Code of Conduct
+2. Login:  
+`curl -X POST http://localhost:3000/login -H "Content-Type: application/json" -d '{"email":"test@example.com","password":"secret123"}'`  
+➡️ Returns `{ "token": "...", "user": {...} }`  
+Refresh token is stored in an **HttpOnly cookie**.
 
-Everyone interacting in the RailsAuthGenerator project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
+3. Access protected route:  
+`curl -H "Authorization: Bearer <your_token>" http://localhost:3000/me`
+
+4. Refresh token:  
+`curl -X POST http://localhost:3000/refresh`  
+➡️ Returns new access token, rotates refresh cookie.
+
+5. Logout:  
+`curl -X DELETE http://localhost:3000/logout`  
+➡️ Revokes refresh token + clears cookie.
+
+---
+
+## 🛡️ Security Defaults
+
+- Access tokens expire after **15 minutes**  
+- Refresh tokens expire after **7 days**  
+- Refresh tokens are **rotated on every use**  
+- Reused tokens trigger **global logout**  
+
+---
+
+## 🤝 Contributing
+
+Bug reports and pull requests are welcome on GitHub at [https://github.com/Zeyad-Hassan-1/authJWT](https://github.com/Zeyad-Hassan-1/authJWT).  
+
+This project follows a [Code of Conduct](CODE_OF_CONDUCT.md). Please respect it in all interactions.
+
+---
+
+## 📄 License
+
+This gem is available as open source under the terms of the [MIT License](LICENSE.txt).

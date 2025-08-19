@@ -24,17 +24,19 @@ end
 
   def add_routes
     route <<~RUBY
-    # config/routes.rb
-      post '/login', to: 'auth#login'
-      post '/signup', to: 'users#create'
-      get '/me', to: 'users#me'
-      resources :password_resets, only: [:create] do
-        collection do
-          put '/', to: 'password_resets#update'  # PUT /password_resets
+      # config/routes.rb
+        post '/login', to: 'auth#login'
+        post '/refresh', to: 'auth#refresh'
+        post '/logout', to: 'auth#logout'
+        post '/signup', to: 'users#create'
+        get '/me', to: 'users#me'
+        resources :password_resets, only: [:create] do
+          collection do
+            put '/', to: 'password_resets#update'  # PUT /password_resets
+          end
         end
-      end
-      # Admin routes
-      post '/users/:id/make_admin', to: 'users#make_admin'
+        # Admin routes
+        post '/users/:id/make_admin', to: 'users#make_admin'
     RUBY
   end
 

@@ -35,8 +35,6 @@ end
             put '/', to: 'password_resets#update'  # PUT /password_resets
           end
         end
-        # Admin routes
-        post '/users/:id/make_admin', to: 'users#make_admin'
     RUBY
   end
 
@@ -50,7 +48,7 @@ end
     template "mailers/user_mailer.rb", "app/mailers/user_mailer.rb"
     template "mailers/application_mailer.rb", "app/mailers/application_mailer.rb"
     template "concerns/authenticatable.rb", "app/controllers/concerns/authenticatable.rb"
-    template "initializers/rails_auth_generator.rb", "config/initializers/rails_auth_generator.rb"
+    template "initializers/jwt_rails_api_auth.rb", "config/initializers/jwt_rails_api_auth.rb"
   end
 
   def modify_application_controller

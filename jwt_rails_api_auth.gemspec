@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/rails_auth_generator/version"
+require_relative "lib/jwt_rails_api_auth/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "rails_auth_generator"
-  spec.version = RailsAuthGenerator::VERSION
+  spec.name = "jwt_rails_api_auth"
+  spec.version = JwtRailsApiAuth::VERSION
   spec.authors = ["Zeyad Hassan"]
   spec.email = [" studying.zezo@gmail.com"]
 
@@ -25,7 +25,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "rails", ">= 6.0", "< 9.0"
+  spec.add_dependency "rails", ">= 6.0"
+  spec.add_dependency "bcrypt", '>= 3.1.12'
+  spec.add_dependency "jwt", "~> 2.5"
+  spec.add_dependency "rack-cors"
+  spec.add_dependency "active_model_serializers", "~> 0.10.12"
   # spec.metadata["allowed_push_host"] = "Set to your gem server 'https://example.com'"
   # spec.metadata["homepage_uri"] = spec.homepage
   # spec.metadata["source_code_uri"] = "Put your gem's public repo URL here."

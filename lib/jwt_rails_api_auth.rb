@@ -1,7 +1,7 @@
-require "rails_auth_generator/version"
-require "rails_auth_generator/configuration"
+require "jwt_rails_api_auth/version"
+require "jwt_rails_api_auth/configuration"
 
-module RailsAuthGenerator
+module JwtRailsApiAuth
   class Error < StandardError; end
 
   class << self

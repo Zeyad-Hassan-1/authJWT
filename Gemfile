@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in rails_auth_generator.gemspec
+# Specify your gem's dependencies in jwt_rails_api_auth.gemspec
 gemspec
 
 gem "irb"

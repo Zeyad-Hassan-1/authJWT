@@ -7,13 +7,13 @@ module Authenticatable
     include ActionController::Cookies
     before_action :authorized
 
-    SECRET_KEY = RailsAuthGenerator.configuration.jwt_secret
+    SECRET_KEY = JwtRailsApiAuth.configuration.jwt_secret
 
-def encode_token(payload, exp = RailsAuthGenerator.configuration.access_token_expiry.from_now)
+def encode_token(payload, exp = JwtRailsApiAuth.configuration.access_token_expiry.from_now)
 
   
   payload[:exp] = exp.to_i
-  payload[:admin] = @user.admin? if @user.is_a?(User) && RailsAuthGenerator.configuration.enable_roles
+  payload[:admin] = @user.admin? if @user.is_a?(User) && JwtRailsApiAuth.configuration.enable_roles
   
   token = JWT.encode(payload, SECRET_KEY)
   

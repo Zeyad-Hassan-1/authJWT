@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   skip_before_action :authorized, only: [:create]
-  before_action :admin_authorized, only: [:make_admin]
   rescue_from ActiveRecord::RecordInvalid, with: :handle_invalid_record
 
 # app/controllers/users_controller.rb
@@ -15,12 +14,6 @@ class UsersController < ApplicationController
 
   def me 
     render json: current_user, status: :ok
-  end
-
-  def make_admin
-    user = User.find(params[:id])
-    user.update!(admin: true)
-    render json: { message: "#{user.username} is now an admin" }, status: :ok
   end
 
   private

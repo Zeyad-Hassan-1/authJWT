@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "rails_auth_generator"
+require "jwt_rails_api_auth"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

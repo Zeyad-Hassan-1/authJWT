@@ -1,4 +1,4 @@
-module RailsAuthGenerator
+module JwtRailsApiAuth
   class Configuration
     attr_accessor :jwt_secret,
                   :access_token_expiry,

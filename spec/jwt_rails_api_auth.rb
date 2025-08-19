@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe RailsAuthGenerator do
+RSpec.describe JwtRailsApiAuth do
   it "has a version number" do
-    expect(RailsAuthGenerator::VERSION).not_to be nil
+    expect(JwtRailsApiAuth::VERSION).not_to be nil
   end
 
   it "does something useful" do

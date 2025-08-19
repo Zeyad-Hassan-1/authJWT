@@ -1,7 +1,7 @@
 
 
 
-[![Gem Version](https://badge.fury.io/rb/jwt_rails_api_auth.svg?icon=si%3Arubygems)](https://badge.fury.io/rb/jwt_rails_api_auth)
+[![Gem Version](https://badge.fury.io/rb/jwt_rails_api_auth.svg)](https://badge.fury.io/rb/jwt_rails_api_auth)
 
 
 # JWT Rails-api auth

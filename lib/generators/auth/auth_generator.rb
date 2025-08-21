@@ -5,7 +5,7 @@ class AuthGenerator < Rails::Generators::Base # rubocop:disable Style/Documentat
   source_root File.expand_path("templates", __dir__)
 
   def modify_gemfile
-    insert_into_file "Gemfile",  after: /^source ['"].*['"]\n/ do
+    insert_into_file "Gemfile", after: /^source ['"].*['"]\n/ do
       <<~RUBY
         gem "bcrypt", ">= 3.1.12"
         gem "jwt", ">= 2.5"

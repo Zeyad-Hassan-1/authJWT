@@ -2,16 +2,16 @@ class AuthGenerator < Rails::Generators::Base
   include Rails::Generators::Migration
   source_root File.expand_path("templates", __dir__)
 
-def modify_gemfile
+  def modify_gemfile
     insert_into_file "Gemfile",  after: /^source ['"].*['"]\n/ do
-    <<~RUBY
-      gem 'bcrypt', '~> 3.1', '>= 3.1.12'
-      gem 'jwt', '~> 2.5'
-      gem 'rack-cors'
-      gem 'active_model_serializers', '~> 0.10.12'
-    RUBY
+      <<~RUBY
+        gem "bcrypt", ">= 3.1.12"
+        gem "jwt", ">= 2.5"
+        gem "rack-cors", ">= 0"
+        gem "active_model_serializers", ">= 0.10.12"
+      RUBY
     end
-end
+  end
 
   def modify_application_rb
     insert_into_file "config/application.rb", after: "config.api_only = true\n" do

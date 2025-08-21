@@ -1,4 +1,6 @@
-class AuthGenerator < Rails::Generators::Base
+# frozen_string_literal: true
+
+class AuthGenerator < Rails::Generators::Base # rubocop:disable Style/Documentation
   include Rails::Generators::Migration
   source_root File.expand_path("templates", __dir__)
 
@@ -19,10 +21,9 @@ class AuthGenerator < Rails::Generators::Base
         config.middleware.use ActionDispatch::Cookies
       RUBY
     end
-
   end
 
-  def add_routes
+  def add_routes # rubocop:disable Metrics/MethodLength
     route <<~RUBY
       # config/routes.rb
         post '/login', to: 'auth#login'
@@ -57,8 +58,7 @@ class AuthGenerator < Rails::Generators::Base
     end
   end
 
-
-  def self.next_migration_number(dirname)
+  def self.next_migration_number(dirname) # rubocop:disable Lint/UnusedMethodArgument
     @prev_migration_nr ||= Time.now.utc.strftime("%Y%m%d%H%M%S").to_i
     @prev_migration_nr += 1
     @prev_migration_nr.to_s
@@ -69,8 +69,8 @@ class AuthGenerator < Rails::Generators::Base
     migration_template "migrations/create_refresh_token.rb", "db/migrate/create_refresh_tokens.rb"
   end
 
-  def enable_cors
-    insert_into_file "config/application.rb"do
+  def enable_cors # rubocop:disable Metrics/MethodLength
+    insert_into_file "config/application.rb" do
       <<~RUBY
         Rails.application.config.middleware.insert_before 0, Rack::Cors do
           allow do

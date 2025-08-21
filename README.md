@@ -33,7 +33,7 @@
 Add this line to your application's Gemfile:
 
 ```bash
-gem 'jwt_rails_api_auth', '~> 1.0', '>= 1.0.1'
+gem 'jwt_rails_api_auth', '~> 1.0', '>= 1.0.2'
 ```
 
 and then run :

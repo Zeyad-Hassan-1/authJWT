@@ -25,11 +25,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "active_model_serializers", ">= 0.10.12"
+  spec.add_dependency "bcrypt", ">= 3.1.12"
+  spec.add_dependency "jwt", ">= 2.5"
+  spec.add_dependency "rack-cors", ">= 0"
   spec.add_dependency "rails", ">= 6.0"
-  spec.add_dependency "bcrypt", '>= 3.1.12'
-  spec.add_dependency "jwt", "~> 2.5"
-  spec.add_dependency "rack-cors"
-  spec.add_dependency "active_model_serializers", "~> 0.10.12"
   # spec.metadata["allowed_push_host"] = "Set to your gem server 'https://example.com'"
   # spec.metadata["homepage_uri"] = spec.homepage
   # spec.metadata["source_code_uri"] = "Put your gem's public repo URL here."
